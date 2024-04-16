@@ -26,5 +26,5 @@ public enum PrioridadeEnum {
             if (cod.equals(prioridade.getCodigo())){
                 return prioridade;
             }
-        } throw new IllegalArgumentException("Prioridade inválid"); }
+        } throw new IllegalArgumentException("Prioridade inváli"); }
 }
