@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.helpdesksenai.helpdesksenai.chamado.Chamado;
 import com.helpdesksenai.helpdesksenai.enums.PerfilEnum;
 import com.helpdesksenai.helpdesksenai.pessoa.Pessoa;
+import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
 public class Cliente extends Pessoa {
     private static final long serialVersionUID = 1L;
     @JsonIgnore
