@@ -16,8 +16,14 @@ public class Tecnico extends Pessoa {
     @OneToMany(mappedBy = "tecnico")
     List<Chamado> chamados = new ArrayList<>();
 
-    public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
-        super(id, nome, cpf, email, senha);
+    public Tecnico(TecnicoDTO tecnicoDTO) {
+        super(
+                tecnicoDTO.getId(),
+                tecnicoDTO.getNome(),
+                tecnicoDTO.getCpf(),
+                tecnicoDTO.getEmail(),
+                tecnicoDTO.getSenha());
+                tecnicoDTO.getDataCriacao();
         addPerfil(PerfilEnum.CLIENTE);
     }
 

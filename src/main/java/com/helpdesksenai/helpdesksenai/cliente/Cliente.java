@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.helpdesksenai.helpdesksenai.chamado.Chamado;
 import com.helpdesksenai.helpdesksenai.enums.PerfilEnum;
 import com.helpdesksenai.helpdesksenai.pessoa.Pessoa;
+import com.helpdesksenai.helpdesksenai.tecnico.TecnicoDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
@@ -16,11 +17,16 @@ public class Cliente extends Pessoa {
     @OneToMany(mappedBy = "cliente")
     List<Chamado> chamados = new ArrayList<>();
 
-    public Cliente(Integer id, String nome, String cpf, String email, String senha) {
-        super(id, nome, cpf, email, senha);
+    public Cliente(ClienteDTO clienteDTO) {
+        super(
+                clienteDTO.getId(),
+                clienteDTO.getNome(),
+                clienteDTO.getCpf(),
+                clienteDTO.getEmail(),
+                clienteDTO.getSenha());
+        clienteDTO.getDataCriacao();
         addPerfil(PerfilEnum.CLIENTE);
     }
-
     public Cliente() {
         super();
         addPerfil(PerfilEnum.CLIENTE);
