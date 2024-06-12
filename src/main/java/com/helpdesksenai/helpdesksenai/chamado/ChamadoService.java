@@ -5,10 +5,10 @@ import com.helpdesksenai.helpdesksenai.cliente.ClienteDTO;
 import com.helpdesksenai.helpdesksenai.cliente.ClienteService;
 import com.helpdesksenai.helpdesksenai.enums.PrioridadeEnum;
 import com.helpdesksenai.helpdesksenai.enums.StatusEnum;
+import com.helpdesksenai.helpdesksenai.exceptions.ObjectNotFoundException;
 import com.helpdesksenai.helpdesksenai.tecnico.Tecnico;
 import com.helpdesksenai.helpdesksenai.tecnico.TecnicoService;
 import jakarta.validation.Valid;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,22 +18,25 @@ import java.util.Optional;
 
 @Service
 public class ChamadoService {
+    private final String OBJETO_NAO_ENCONTRADO = "objeto não encontrado ";
+    private final String POSSUI_CHAMADO_EM_ABERTO = " A entidade Possui chamado em Aberto e não pode ser excluido";
     @Autowired
     private ChamadoRepository repository;
+    @Autowired
     private TecnicoService tecnicoService;
+    @Autowired
     private ClienteService clienteService;
 
     public Chamado findById(Integer id) {
         Optional<Chamado> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id, obj));
+        return obj.orElseThrow(() -> new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO + id));
     }
     public List<Chamado> findAll() {
         return repository.findAll();
     }
     public Chamado create(ChamadoDTO objDTO) {
         objDTO.setId(null);
-        Chamado newObj = novoChamado(objDTO);
-        return repository.save(newObj);
+        return repository.save(novoChamado(objDTO));
     }
     public Chamado update(Integer id, @Valid ChamadoDTO chamadoDTO) {
         chamadoDTO.setId(id);
@@ -54,9 +57,9 @@ public class ChamadoService {
         }
         chamado.setTecnico(tecnico);
         chamado.setCliente(cliente);
-        chamado.setPrioridadeEnum(PrioridadeEnum.toEnum(chamadoDTO.getPrioridade()));
-        chamado.setStatusEnum(StatusEnum.toEnum(chamadoDTO.getStatus()));
-        chamado.setTitulo(chamado.getTitulo());
+        chamado.setPrioridadeEnum(PrioridadeEnum.toEnum(chamadoDTO.getPrioridade().getCodigo()));
+        chamado.setStatusEnum(StatusEnum.toEnum(chamadoDTO.getStatus().getCodigo()));
+        chamado.setTitulo(chamadoDTO.getTitulo());
         chamado.setObservacoes(chamadoDTO.getObservacoes());
         return chamado;
     }

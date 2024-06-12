@@ -2,8 +2,8 @@ package com.helpdesksenai.helpdesksenai.enums;
 
 public enum PerfilEnum {
     ADMIN(0, "Administrador"),
-    CLIENTE(0, "Cliente"),
-    TECNICO(0, "Técnico");
+    CLIENTE(1, "Cliente"),
+    TECNICO(2, "Técnico");
     private Integer codigo;
     private String descricao;
 

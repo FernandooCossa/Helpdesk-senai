@@ -1,6 +1,10 @@
 package com.helpdesksenai.helpdesksenai.chamado;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.helpdesksenai.helpdesksenai.cliente.Cliente;
+import com.helpdesksenai.helpdesksenai.enums.PrioridadeEnum;
+import com.helpdesksenai.helpdesksenai.enums.StatusEnum;
+import com.helpdesksenai.helpdesksenai.tecnico.Tecnico;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,17 +16,13 @@ public class ChamadoDTO implements Serializable {
     private LocalDate dataAbertura = LocalDate.now();
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
-    @NotNull(message = "O campo PRIORIDADE é requerido")
-    private Integer prioridade;
-    @NotNull(message = "O campo STATUS é requerido")
-    private Integer status;
+    private PrioridadeEnum prioridade;
+    private StatusEnum status;
     @NotNull(message = "O campo TITULO é requerido")
     private String titulo;
     @NotNull(message = "O campo OBSERVAÇÕES é requerido")
     private String observacoes;
-    @NotNull(message = "O campo TECNICO é requerido")
     private Integer tecnico;
-    @NotNull(message = "O campo CLIENTE é requerido")
     private Integer cliente;
     private String nomeTecnico;
     private String nomeCliente;
@@ -30,19 +30,34 @@ public class ChamadoDTO implements Serializable {
     public ChamadoDTO(){
 
     }
-    public ChamadoDTO(Integer id, LocalDate dataAbertura, LocalDate dataFechamento, Integer prioridade, Integer status, String titulo, String observacoes, Integer tecnico, Integer cliente, String nomeTecnico, String nomeCliente) {
-        this.id = id;
-        this.dataAbertura = dataAbertura;
-        this.dataFechamento = dataFechamento;
-        this.prioridade = prioridade;
-        this.status = status;
-        this.titulo = titulo;
-        this.observacoes = observacoes;
-        this.tecnico = tecnico;
-        this.cliente = cliente;
-        this.nomeTecnico = nomeTecnico;
-        this.nomeCliente = nomeCliente;
+
+    public ChamadoDTO(Chamado chamado){
+        this.id = chamado.getId();
+        this.dataAbertura = chamado.getDataAbertura();
+        this.dataFechamento = chamado.getDataFechamento();
+        this.prioridade = chamado.getPrioridadeEnum();
+        this.status = chamado.getStatusEnum();
+        this.titulo = chamado.getTitulo();
+        this.observacoes = chamado.getObservacoes();
+        this.tecnico = chamado.getTecnico().getId();
+        this.cliente = chamado.getCliente().getId();
+        this.nomeTecnico = chamado.getTecnico().getNome();
+        this.nomeCliente = chamado.getCliente().getNome();
     }
+
+//    public ChamadoDTO(Integer id, LocalDate dataAbertura, LocalDate dataFechamento, Integer prioridade, Integer status, String titulo, String observacoes, Integer tecnico, Integer cliente, String nomeTecnico, String nomeCliente) {
+//        this.id = id;
+//        this.dataAbertura = dataAbertura;
+//        this.dataFechamento = dataFechamento;
+//        this.prioridade = prioridade;
+//        this.status = status;
+//        this.titulo = titulo;
+//        this.observacoes = observacoes;
+//        this.tecnico = tecnico;
+//        this.cliente = cliente;
+//        this.nomeTecnico = nomeTecnico;
+//        this.nomeCliente = nomeCliente;
+//    }
 
     public Integer getId() {
         return id;
@@ -68,19 +83,19 @@ public class ChamadoDTO implements Serializable {
         this.dataFechamento = dataFechamento;
     }
 
-    public Integer getPrioridade() {
+    public PrioridadeEnum getPrioridade() {
         return prioridade;
     }
 
-    public void setPrioridade(Integer prioridade) {
+    public void setPrioridade(PrioridadeEnum prioridade) {
         this.prioridade = prioridade;
     }
 
-    public Integer getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 

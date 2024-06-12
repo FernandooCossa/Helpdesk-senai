@@ -2,9 +2,11 @@ package com.helpdesksenai.helpdesksenai.chamado;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.helpdesksenai.helpdesksenai.cliente.Cliente;
+import com.helpdesksenai.helpdesksenai.enums.PerfilEnum;
 import com.helpdesksenai.helpdesksenai.enums.PrioridadeEnum;
 import com.helpdesksenai.helpdesksenai.enums.StatusEnum;
 import com.helpdesksenai.helpdesksenai.tecnico.Tecnico;
+import com.helpdesksenai.helpdesksenai.tecnico.TecnicoDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -25,25 +27,36 @@ public class Chamado implements Serializable {
     private StatusEnum statusEnum;
     private String titulo;
     private String observacoes;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tecnico_id")
     private Tecnico tecnico;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    public Chamado(Integer id, LocalDate dataAbertura, LocalDate dataFechamento, PrioridadeEnum prioridadeEnum, StatusEnum statusEnum, String titulo, String observacoes, Tecnico tecnico, Cliente cliente) {
-        this.id = id;
-        this.dataAbertura = dataAbertura;
-        this.dataFechamento = dataFechamento;
-        this.prioridadeEnum = prioridadeEnum;
-        this.statusEnum = statusEnum;
-        this.titulo = titulo;
-        this.observacoes = observacoes;
-        this.tecnico = tecnico;
-        this.cliente = cliente;
-    }
+//    public Chamado(Integer id, LocalDate dataAbertura, LocalDate dataFechamento, PrioridadeEnum prioridadeEnum, StatusEnum statusEnum, String titulo, String observacoes, Tecnico tecnico, Cliente cliente) {
+//        this.id = id;
+//        this.dataAbertura = dataAbertura;
+//        this.dataFechamento = dataFechamento;
+//        this.prioridadeEnum = prioridadeEnum;
+//        this.statusEnum = statusEnum;
+//        this.titulo = titulo;
+//        this.observacoes = observacoes;
+//        this.tecnico = tecnico;
+//        this.cliente = cliente;
+//    }
 
+    public Chamado(ChamadoDTO chamadoDTO) {
+        this.id = chamadoDTO.getId();
+        this.dataAbertura = chamadoDTO.getDataAbertura();
+        this.dataFechamento = chamadoDTO.getDataFechamento();
+        this.prioridadeEnum = chamadoDTO.getPrioridade();
+        this.statusEnum = chamadoDTO.getStatus();
+        this.titulo = chamadoDTO.getTitulo();
+        this.observacoes = chamadoDTO.getObservacoes();
+//        this.tecnico = chamadoDTO.getTecnico();
+//        this.cliente = chamadoDTO.getCliente();
+    }
     public Chamado() {
     }
 

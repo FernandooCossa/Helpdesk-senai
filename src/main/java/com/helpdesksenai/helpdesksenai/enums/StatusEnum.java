@@ -2,8 +2,8 @@ package com.helpdesksenai.helpdesksenai.enums;
 
 public enum StatusEnum {
     ABERTO(0, "Aberto"),
-    ANDAMENTO(0, "Andamento"),
-    ENCERRADO(0, "Encerrado");
+    ANDAMENTO(1, "Andamento"),
+    ENCERRADO(2, "Encerrado");
     private Integer codigo;
     private String descricao;
 
